@@ -1,6 +1,4 @@
-﻿using System.Reflection.PortableExecutable;
-
-namespace IntensitySegments.Utils;
+﻿namespace IntensitySegments.Utils;
 
 public class SkipList
 {

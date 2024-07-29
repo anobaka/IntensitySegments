@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using IntensitySegments.Abstractions;
+﻿using IntensitySegments.Abstractions;
 using IntensitySegments.Utils;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace IntensitySegments.Implementations;
 
