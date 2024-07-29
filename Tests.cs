@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using FluentAssertions;
+using IntensitySegments.Implementations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IntensitySegments;
@@ -10,7 +11,7 @@ public class Tests
     [TestMethod]
     public void Test1()
     {
-        var segments = new IntensitySegments();
+        var segments = new IntensitySegments(new SkipListIntensitySegmentsStore());
 
         segments.ToString().Should().BeEquivalentTo("[]");
         segments.Add(10, 30, 1);
@@ -24,7 +25,7 @@ public class Tests
     [TestMethod]
     public void Test2()
     {
-        var segments = new IntensitySegments();
+        var segments = new IntensitySegments(new SkipListIntensitySegmentsStore());
 
         segments.ToString().Should().BeEquivalentTo("[]");
         segments.Add(10, 30, 1);
@@ -43,7 +44,7 @@ public class Tests
         const int interval = 100000;
         var contrast = new int[interval];
 
-        var segments = new IntensitySegments();
+        var segments = new IntensitySegments(new SkipListIntensitySegmentsStore());
         var rand = new Random();
 
         for (var i = 0; i < 10000; i++)
@@ -52,19 +53,19 @@ public class Tests
             switch (opt)
             {
                 case 0:
-                    // Console.WriteLine($"{segments} - {DisplayArrayAsIntensitySegments(contrast)}");
+                    Console.WriteLine($"{segments} - {DisplayArrayAsIntensitySegments(contrast)}");
                     segments.ToString().Should().Be(DisplayArrayAsIntensitySegments(contrast));
                     break;
                 case 1:
                 case 2:
                 {
-                    var from = rand.Next(0, interval);
-                    var to = rand.Next(from, interval);
+                    var from = rand.Next(0, interval - 1);
+                    var to = rand.Next(from + 1, interval);
                     var amount = rand.Next(0, interval);
                     switch (opt)
                     {
                         case 1:
-                            // Console.WriteLine($"Add {amount} from {from} to {to}");
+                            Console.WriteLine($"Add {amount} from {from} to {to}");
                             segments.Add(from, to, amount);
                             for (var j = from; j < to; j++)
                             {
@@ -73,7 +74,7 @@ public class Tests
 
                             break;
                         case 2:
-                            // Console.WriteLine($"Set {amount} from {from} to {to}");
+                            Console.WriteLine($"Set {amount} from {from} to {to}");
                             segments.Set(from, to, amount);
                             for (var j = from; j < to; j++)
                             {
